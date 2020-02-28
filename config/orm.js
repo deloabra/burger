@@ -22,7 +22,7 @@ var orm = {
         var queryString = "UPDATE " + tableInput;
 
         queryString += " SET ";
-        queryString += objToSql(objColVals);
+        queryString += set;
         queryString += " WHERE ";
         queryString += condition;
     
