@@ -1,0 +1,8 @@
+.title{
+    width: 100%;
+    border: 2px dotted red;
+}
+.burger-list{
+    width: 50%;
+    float: left;
+}
