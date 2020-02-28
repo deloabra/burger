@@ -1,8 +1,25 @@
 .title{
     width: 100%;
-    border: 2px dotted red;
+    font-size: 35px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 5px solid black;
 }
 .burger-list{
     width: 50%;
     float: left;
+}
+button{
+    display: inline;
+    border-radius: 0;
+}
+li{
+    list-style-type: none;
+}
+.burger-list-element{
+    font-size: 20px;
+}
+body{
+    text-align: center;
+    background-color: cornflowerblue;
 }

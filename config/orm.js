@@ -1,5 +1,20 @@
 var connection = require("../config/connection.js");
 
+//Make sets work properly
+function objToSql(ob) {
+    var arr = [];
+    for (var key in ob) {
+      var value = ob[key];
+      if (Object.hasOwnProperty.call(ob, key)) {
+        if (typeof value === "string" && value.indexOf(" ") >= 0) {
+          value = "'" + value + "'";
+        }
+        arr.push(key + "=" + value);
+      }
+    }
+    return arr.toString();
+}
+
 var orm = {
     selectAll: function(tableInput, cb) {
         var queryString = "SELECT * FROM " + tableInput + ";";
@@ -12,7 +27,7 @@ var orm = {
     },
     insertOne: function(tableInput, set, cb){
         var queryString = "INSERT INTO " + tableInput;
-        queryString += " SET " + set;
+        queryString += " SET " + objToSql(set);
         connection.query(queryString, (err, result) => {
             if(err) throw err;
             cb(result);
@@ -22,19 +37,28 @@ var orm = {
         var queryString = "UPDATE " + tableInput;
 
         queryString += " SET ";
-        queryString += set;
+        queryString += objToSql(set);
         queryString += " WHERE ";
         queryString += condition;
     
         console.log(queryString);
         connection.query(queryString, function(err, result) {
-          if (err) {
-            throw err;
-          }
+          if (err) throw err;
     
           cb(result);
         });
     
+    },
+    deleteOne: function(tableInput, condition, cb){
+      var queryString = "DELETE FROM " + tableInput;
+      queryString += " WHERE ";
+      queryString += condition;
+
+      console.log(queryString);
+      connection.query(queryString, function(err, result){
+        if(err) throw err;
+        cb(result);
+      })
     }
     
 };
