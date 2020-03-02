@@ -6,7 +6,7 @@ function objToSql(ob) {
     for (var key in ob) {
       var value = ob[key];
       if (Object.hasOwnProperty.call(ob, key)) {
-        if (typeof value === "string" && value.indexOf(" ") >= 0) {
+        if (typeof value === "string") {
           value = "'" + value + "'";
         }
         arr.push(key + "=" + value);
@@ -27,7 +27,7 @@ var orm = {
     },
     insertOne: function(tableInput, set, cb){
         var queryString = "INSERT INTO " + tableInput;
-        queryString += " SET " + objToSql(set);
+        queryString += " SET " + `${objToSql(set)}`;
         connection.query(queryString, (err, result) => {
             if(err) throw err;
             cb(result);
